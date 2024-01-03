@@ -23,7 +23,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import FormError from "../FormError";
 import FormSucces from "../FormSuccess";
-import { login } from "@/actions/login";
+import { register } from "@/actions/register";
 
 const RegisterForm = () => {
     const [isPending, startTransition] = useTransition();
@@ -41,7 +41,7 @@ const RegisterForm = () => {
 
     const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
         startTransition(() => {
-            login(values).then((data) => {
+            register(values).then((data) => {
                 setError(data.error);
                 setSuccess(data.success);
             });
@@ -61,6 +61,24 @@ const RegisterForm = () => {
                     className="space-y-6"
                 >
                     <div className="space-y-4">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Nome:</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            disabled={isPending}
+                                            placeholder="insira seu nome"
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
                         <FormField
                             control={form.control}
                             name="email"
@@ -108,7 +126,7 @@ const RegisterForm = () => {
                         typeof="submit"
                         className="w-full"
                     >
-                        Entrar
+                        Criar conta
                     </Button>
                 </form>
             </Form>

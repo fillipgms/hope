@@ -1,7 +1,7 @@
-import LoginForm from "@/components/auth/LoginForm";
+import RegisterForm from "@/components/auth/RegisterForm";
 
 const RegiterPage = () => {
-    return <LoginForm />;
+    return <RegisterForm />;
 };
 
 export default RegiterPage;
