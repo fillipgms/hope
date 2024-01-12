@@ -20,3 +20,15 @@ export const RegisterSchema = z.object({
         message: "Isira seu nome",
     }),
 });
+
+export const ResetSchema = z.object({
+    email: z.string().email({
+        message: "Insira um email",
+    }),
+});
+
+export const NewPasswordSchema = z.object({
+    password: z.string().min(6, {
+        message: "A senha precisa ter 6 ou mais caracteres",
+    }),
+});
