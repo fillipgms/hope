@@ -7,6 +7,7 @@ import {
     apiAuthPrefix,
     authRoutes,
     publicRoutes,
+    adminRoutes,
 } from "@/routes";
 
 const { auth } = NextAuth(authConfig);
@@ -14,10 +15,13 @@ const { auth } = NextAuth(authConfig);
 export default auth((req) => {
     const { nextUrl } = req;
     const isLoggedIn = !!req.auth;
+    const user = req.auth?.user;
 
+    // const user = useCurrentUser();
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
     const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+    const isAdminRoute = adminRoutes.includes(nextUrl.pathname);
 
     if (isApiAuthRoute) {
         return null;
@@ -30,8 +34,14 @@ export default auth((req) => {
         return null;
     }
 
+    if (isAdminRoute) {
+        if (!isLoggedIn || user?.role === "USER") {
+            return Response.redirect(new URL("/", nextUrl));
+        }
+    }
+
     if (!isLoggedIn && !isPublicRoute) {
-        return Response.redirect(new URL("/auth/login", nextUrl));
+        return Response.redirect(new URL("/", nextUrl));
     }
 
     return null;

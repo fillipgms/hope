@@ -1,7 +1,8 @@
-import { Button } from "@/components/ui/button";
-
 export default function Home() {
     return (
-        <main className="flex h-full flex-col items-center justify-center bg-slate-50"></main>
+        <main className="flex h-full flex-col bg-slate-50">
+            <section className="w-full md:h-screen h-[70vh] relative bg-[url('../public/images/header.jpg')] bg-cover bg-center"></section>
+            <section>oii</section>
+        </main>
     );
 }

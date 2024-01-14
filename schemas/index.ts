@@ -21,6 +21,31 @@ export const RegisterSchema = z.object({
     }),
 });
 
+export const FotoProdutoSchema = z.object({
+    url: z.string().url({
+        message: "Insira uma URL válida para a foto",
+    }),
+});
+
+export const ProdutoSchema = z.object({
+    nome: z.string().min(1, {
+        message: "Insira o nome do produto",
+    }),
+    descricao: z.string().min(1, {
+        message: "Insira a descrição do produto",
+    }),
+    fotos: z.array(z.string()).default([]),
+    preco: z.string().min(1, {
+        message: "Insira o preço do produto",
+    }),
+    categoria: z.string().min(1, {
+        message: "Insira a categoria do produto",
+    }),
+    colecao: z.string().min(1, {
+        message: "Selecione a coleção do produto",
+    }),
+});
+
 export const ResetSchema = z.object({
     email: z.string().email({
         message: "Insira um email",

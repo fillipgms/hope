@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,12 +22,16 @@ export default async function RootLayout({
 
     return (
         <SessionProvider session={session}>
-            <html lang="pt-br">
-                <body className={`${inter.className} min-h-dvh relative`}>
-                    <Header />
-                    <main className="pt-28 h-dvh bg-slate-50">{children}</main>
-                </body>
-            </html>
+            <EdgeStoreProvider>
+                <html lang="pt-br">
+                    <body className={`${inter.className} min-h-dvh relative`}>
+                        <Header />
+                        <div className="h-dvh pt-[72px] bg-slate-50">
+                            {children}
+                        </div>
+                    </body>
+                </html>
+            </EdgeStoreProvider>
         </SessionProvider>
     );
 }

@@ -8,6 +8,8 @@ export const authRoutes = [
     "/auth/novasenha",
 ];
 
+export const adminRoutes = ["/admin, /admin/*"];
+
 export const apiAuthPrefix = "/api/auth";
 
 export const DEFAULT_LOGIN_REDIRECT = "/settings";

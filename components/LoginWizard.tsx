@@ -2,24 +2,22 @@
 import React from "react";
 import { CgProfile } from "react-icons/cg";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 const LoginWizard = () => {
-    const session = useSession();
     const user = useCurrentUser();
 
     return (
         <div>
-            {session.data ? (
+            {user ? (
                 <Link href="/settings">
                     <img
                         src={
-                            user?.image ||
+                            user.image ||
                             "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
                         }
                         alt="sua foto de perfil"
-                        className="rounded-full w-9 shadow-md"
+                        className="rounded-full w-9 shadow-md h-9 object-cover"
                     />
                 </Link>
             ) : (
