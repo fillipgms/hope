@@ -34,7 +34,6 @@ export const ProdutoSchema = z.object({
     descricao: z.string().min(1, {
         message: "Insira a descrição do produto",
     }),
-    fotos: z.array(z.string()).default([]),
     preco: z.string().min(1, {
         message: "Insira o preço do produto",
     }),
@@ -44,6 +43,7 @@ export const ProdutoSchema = z.object({
     colecao: z.string().min(1, {
         message: "Selecione a coleção do produto",
     }),
+    fotos: z.array(z.string()).default([]),
 });
 
 export const ResetSchema = z.object({

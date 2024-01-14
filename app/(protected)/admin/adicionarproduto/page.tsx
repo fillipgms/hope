@@ -61,29 +61,28 @@ export default function AdicionarProdutoPage() {
             nome: "",
             descricao: "",
             preco: "",
-            colecao: "",
             categoria: "",
+            colecao: "",
             fotos: [],
         },
     });
 
     const onSubmit = (values: z.infer<typeof ProdutoSchema>) => {
-        console.log("oii");
-        // startTransition(() => {
-        //     startTransition(() => {
-        //         criarProduto({ ...values, fotos: urls }).then((data) => {
-        //             setError(data.error);
-        //             setSuccess(data.success);
+        startTransition(() => {
+            startTransition(() => {
+                criarProduto({ ...values, fotos: urls }).then((data) => {
+                    setError(data.error);
+                    setSuccess(data.success);
 
-        //             if (!data.error) {
-        //                 // Limpar os valores do formulário após o sucesso
-        //                 form.reset();
-        //                 setFileStates([]);
-        //                 setUrls([]);
-        //             }
-        //         });
-        //     });
-        // });
+                    if (!data.error) {
+                        // Limpar os valores do formulário após o sucesso
+                        form.reset();
+                        setFileStates([]);
+                        setUrls([]);
+                    }
+                });
+            });
+        });
     };
 
     return (
@@ -180,7 +179,7 @@ export default function AdicionarProdutoPage() {
                                 </FormItem>
                             )}
                         />
-                        {/* <FormField
+                        <FormField
                             control={form.control}
                             name="preco"
                             render={({ field }) => (
@@ -201,57 +200,67 @@ export default function AdicionarProdutoPage() {
                                     <FormMessage />
                                 </FormItem>
                             )}
-                        /> */}
-                        {/* <FormField
+                        />
+                        <FormField
                             control={form.control}
                             name="categoria"
-                            render={() => (
-                                <Select  disabled={isPending}>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Selecione a categoria" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="paletas">
-                                            paletas
-                                        </SelectItem>
-                                        <SelectItem value="pele">
-                                            pele
-                                        </SelectItem>
-                                        <SelectItem value="lábios">
-                                            lábios
-                                        </SelectItem>
-                                        <SelectItem value="olhos">
-                                            olhos
-                                        </SelectItem>
-                                    </SelectContent>
-                                </Select>
+                            render={({ field }) => (
+                                <FormItem>
+                                    <Select onValueChange={field.onChange}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Selecione a categoria" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem value="paletas">
+                                                paletas
+                                            </SelectItem>
+                                            <SelectItem value="pele">
+                                                pele
+                                            </SelectItem>
+                                            <SelectItem value="lábios">
+                                                lábios
+                                            </SelectItem>
+                                            <SelectItem value="olhos">
+                                                olhos
+                                            </SelectItem>
+                                        </SelectContent>
+                                        <FormMessage />
+                                    </Select>
+                                </FormItem>
                             )}
                         />
                         <FormField
                             control={form.control}
                             name="colecao"
-                            render={() => (
-                                <Select  disabled={isPending}>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Selecione a coleção" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="spring's here">
-                                            spring's here
-                                        </SelectItem>
-                                        <SelectItem value="winter feels">
-                                            winter feels
-                                        </SelectItem>
-                                        <SelectItem value="autumn breeze">
-                                            autumn breeze
-                                        </SelectItem>
-                                        <SelectItem value="summer hills">
-                                            summer hills
-                                        </SelectItem>
-                                    </SelectContent>
-                                </Select>
+                            render={({ field }) => (
+                                <FormItem>
+                                    <Select onValueChange={field.onChange}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Selecione a categoria" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem value="spring's here">
+                                                spring's here
+                                            </SelectItem>
+                                            <SelectItem value="winter feels">
+                                                winter feels
+                                            </SelectItem>
+                                            <SelectItem value="autumn breeze">
+                                                autumn breeze
+                                            </SelectItem>
+                                            <SelectItem value="summer hills">
+                                                summer hills
+                                            </SelectItem>
+                                        </SelectContent>
+                                        <FormMessage />
+                                    </Select>
+                                </FormItem>
                             )}
-                        /> */}
+                        />
 
                         <FormSucces message={success} />
                         <FormError message={error} />
@@ -259,13 +268,13 @@ export default function AdicionarProdutoPage() {
                         <Button
                             type="submit"
                             className="w-full"
-                            // onClick={async () => {
-                            //     for (const url of urls) {
-                            //         await edgestore.publicFiles.confirmUpload({
-                            //             url,
-                            //         });
-                            //     }
-                            // }}
+                            onClick={async () => {
+                                for (const url of urls) {
+                                    await edgestore.publicFiles.confirmUpload({
+                                        url,
+                                    });
+                                }
+                            }}
                         >
                             Criar produto
                         </Button>
