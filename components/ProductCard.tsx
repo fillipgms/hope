@@ -1,32 +1,29 @@
 import React from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
-import Image from "next/image";
 
-const ProductCard = ({
-    nome,
-    descricao,
-    fotos,
-    preco,
-}: models.ProdutoProps) => {
+const ProductCard = ({ nome, fotos, preco }: models.ProdutoProps) => {
     return (
-        <Card>
-            <CardHeader>
-                <h3 className="bg-hope-primary text-hope-dark text-center font-semibold py-2 capitalize">
-                    {nome}
-                </h3>
+        <Card className="md:w-80 overflow-hidden">
+            <CardHeader className="text-center px-0 pt-0 pb-6">
+                <h3 className="bg-hope-primary py-2 px-3 ">{nome}</h3>
             </CardHeader>
-            <CardContent>
-                <Image
-                    src={fotos[0].url}
+            <CardContent className="flex flex-col gap-3">
+                <img
+                    src={fotos[fotos.length - 1].url}
                     alt="foto do produto"
-                    width="300"
-                    height="100"
-                    className="w-full aspect-video object-cover"
+                    className="object-cover w-full aspect-video rounded-md"
                 />
+
+                <div className="flex flex-wrap items-center justify-between px-6 py-1">
+                    <span>TODO: estrelas</span>
+                    <h4 className="text-xl ">{preco}</h4>
+                </div>
             </CardContent>
             <CardFooter>
-                <Button>comprar</Button>
+                <Button className="w-full bg-hope-primary text-hope-dark hover:bg-hope-primary/70">
+                    Adicionar ao carrinho
+                </Button>
             </CardFooter>
         </Card>
     );
