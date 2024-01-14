@@ -32,8 +32,11 @@ export const getAllProducts = async () => {
             include: { fotos: true },
         });
 
+        console.log("Products:", products);
+
         return products;
-    } catch {
+    } catch (error) {
+        console.error("Error fetching products:", error);
         return null;
     }
 };

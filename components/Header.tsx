@@ -14,9 +14,9 @@ const Header = () => {
                 <LoginWizard />
 
                 <Link href="/carrinho" className="relative h-full">
-                    <span className="fixed text-xs right-2 top-2 bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full">
+                    {/* <span className="fixed text-xs right-2 top-2 bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full">
                         11
-                    </span>
+                    </span> */}
                     <FaShoppingBasket />
                 </Link>
             </div>
