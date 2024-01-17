@@ -27,8 +27,18 @@ export const criarProduto = async (values: z.infer<typeof ProdutoSchema>) => {
                 create: fotos.map((foto) => ({ url: foto })),
             },
             preco,
-            categoria,
-            colecao,
+            categoria: {
+                connectOrCreate: {
+                    where: { nomeCategoria: categoria },
+                    create: { nomeCategoria: categoria },
+                },
+            },
+            colecao: {
+                connectOrCreate: {
+                    where: { nomeColecao: colecao },
+                    create: { nomeColecao: colecao },
+                },
+            },
         },
     });
 

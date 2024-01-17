@@ -69,8 +69,10 @@ model Produto {
   nome        String
   descricao   String
   preco       String
-  categoria   String
-  colecao     String
+  categoria   Categoria @relation(fields:  [idCategoria],  references: [id])
+  idCategoria String
+  colecao     Colecao @relation(fields:  [idColecao],  references: [id])
+  idColecao   String 
   fotos       FotoProduto[]
 }
 
@@ -79,4 +81,16 @@ model FotoProduto {
   url       String
   produto   Produto @relation(fields: [produtoId], references: [id])
   produtoId String
+}
+
+model Colecao {
+  id            String  @id @default(cuid())
+  nomeColecao   String @unique
+  Produtos      Produto[]
+}
+
+model Categoria {
+  id              String  @id @default(cuid())
+  nomeCategoria   String @unique
+  Produtos        Produto[]
 }

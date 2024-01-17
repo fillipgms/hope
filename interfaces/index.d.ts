@@ -9,8 +9,18 @@ namespace models {
         nome: string;
         descricao: string;
         preco: string;
-        categoria: string;
-        colecao: string;
+        idCategoria: string;
+        idColecao: string;
         fotos: FotoProps[];
+    }
+
+    interface Colecaoprops {
+        id: string;
+        nomeColecao: string;
+    }
+
+    interface CategoriaProps {
+        id: string;
+        nomeCategoria: string;
     }
 }
