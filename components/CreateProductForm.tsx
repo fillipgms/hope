@@ -35,7 +35,7 @@ import {
 
 const CreateProdutoForm = () => {
     const [isPending, startTransition] = useTransition();
-
+    const [key, setKey] = useState<number>(+new Date());
     const [fileStates, setFileStates] = useState<FileState[]>([]);
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
@@ -58,25 +58,25 @@ const CreateProdutoForm = () => {
     const form = useForm<z.infer<typeof ProdutoSchema>>({
         resolver: zodResolver(ProdutoSchema),
         defaultValues: {
-            nome: "",
-            descricao: "",
-            preco: "",
-            categoria: "",
-            colecao: "",
-            fotos: [],
+            name: "",
+            description: "",
+            price: "",
+            category: "",
+            collection: "",
+            pictures: [],
         },
     });
 
     const onSubmit = (values: z.infer<typeof ProdutoSchema>) => {
         startTransition(() => {
             startTransition(() => {
-                criarProduto({ ...values, fotos: urls }).then((data) => {
+                criarProduto({ ...values, pictures: urls }).then((data) => {
                     setError(data.error);
                     setSuccess(data.success);
 
                     if (!data.error) {
-                        // Limpar os valores do formulário após o sucesso
                         form.reset();
+                        setKey(+new Date());
                         setFileStates([]);
                         setUrls([]);
                     }
@@ -149,7 +149,7 @@ const CreateProdutoForm = () => {
                 <div className="flex flex-col gap-2">
                     <FormField
                         control={form.control}
-                        name="nome"
+                        name="name"
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
@@ -165,7 +165,7 @@ const CreateProdutoForm = () => {
                     />
                     <FormField
                         control={form.control}
-                        name="descricao"
+                        name="description"
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
@@ -181,7 +181,7 @@ const CreateProdutoForm = () => {
                     />
                     <FormField
                         control={form.control}
-                        name="preco"
+                        name="price"
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
@@ -203,10 +203,13 @@ const CreateProdutoForm = () => {
                     />
                     <FormField
                         control={form.control}
-                        name="categoria"
+                        name="category"
                         render={({ field }) => (
                             <FormItem>
-                                <Select onValueChange={field.onChange}>
+                                <Select
+                                    onValueChange={field.onChange}
+                                    key={key}
+                                >
                                     <FormControl>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Selecione a categoria" />
@@ -233,10 +236,13 @@ const CreateProdutoForm = () => {
                     />
                     <FormField
                         control={form.control}
-                        name="colecao"
+                        name="collection"
                         render={({ field }) => (
                             <FormItem>
-                                <Select onValueChange={field.onChange}>
+                                <Select
+                                    onValueChange={field.onChange}
+                                    key={key}
+                                >
                                     <FormControl>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Selecione a categoria" />

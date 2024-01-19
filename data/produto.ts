@@ -2,9 +2,9 @@ import { db } from "@/lib/db";
 
 export const getProductById = async (productId: string) => {
     try {
-        const product = await db.produto.findUnique({
+        const product = await db.product.findUnique({
             where: { id: productId },
-            include: { fotos: true },
+            include: { pictures: true },
         });
 
         return product;
@@ -15,9 +15,9 @@ export const getProductById = async (productId: string) => {
 
 export const getProductByName = async (productName: string) => {
     try {
-        const product = await db.produto.findFirst({
-            where: { nome: productName },
-            include: { fotos: true },
+        const product = await db.product.findFirst({
+            where: { name: productName },
+            include: { pictures: true },
         });
 
         return product;
@@ -28,8 +28,8 @@ export const getProductByName = async (productName: string) => {
 
 export const getAllProducts = async () => {
     try {
-        const products = await db.produto.findMany({
-            include: { fotos: true },
+        const products = await db.product.findMany({
+            include: { pictures: true },
         });
 
         return products;

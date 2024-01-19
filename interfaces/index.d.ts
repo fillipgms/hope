@@ -2,17 +2,17 @@ namespace models {
     interface FotoProps {
         id: string;
         url: string;
-        produtoId: string;
+        produtoId?: string;
     }
 
     interface ProdutoProps {
         id: string;
-        nome: string;
-        descricao: string;
-        preco: string;
-        idCategoria: string;
-        idColecao: string;
-        fotos: FotoProps[];
+        name: string;
+        description: string;
+        price: string;
+        categoryId: string;
+        collectionId: string;
+        pictures: FotoProps[];
         cartItem?: CartItemProps[];
     }
 

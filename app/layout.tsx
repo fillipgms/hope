@@ -26,7 +26,7 @@ export default async function RootLayout({
                 <html lang="pt-br">
                     <body className={`${inter.className} min-h-dvh relative`}>
                         <Header />
-                        <div className="h-dvh pt-[72px] bg-slate-50">
+                        <div className="h-dvh pt-[85px] bg-slate-50">
                             {children}
                         </div>
                     </body>

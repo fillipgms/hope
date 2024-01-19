@@ -2,13 +2,13 @@ import { getAllCategories } from "@/data/categoria";
 import React from "react";
 
 const NavCategorias = async () => {
-    const categorias = await getAllCategories();
+    const categories = await getAllCategories();
 
     return (
         <nav>
             <ul className="flex items-center justify-evenly">
-                {categorias?.map((categoria, index) => (
-                    <li key={index}>{categoria.nomeCategoria}</li>
+                {categories?.map((categoria, index) => (
+                    <li key={index}>{categoria.categoryName}</li>
                 ))}
             </ul>
         </nav>

@@ -28,22 +28,22 @@ export const FotoProdutoSchema = z.object({
 });
 
 export const ProdutoSchema = z.object({
-    nome: z.string().min(1, {
+    name: z.string().min(1, {
         message: "Insira o nome do produto",
     }),
-    descricao: z.string().min(1, {
+    description: z.string().min(1, {
         message: "Insira a descrição do produto",
     }),
-    preco: z.string().min(1, {
+    price: z.string().min(1, {
         message: "Insira o preço do produto",
     }),
-    categoria: z.string().min(1, {
+    category: z.string().min(1, {
         message: "Insira a categoria do produto",
     }),
-    colecao: z.string().min(1, {
+    collection: z.string().min(1, {
         message: "Selecione a coleção do produto",
     }),
-    fotos: z.array(z.string()).default([]),
+    pictures: z.array(z.string()).default([]),
     cartItem: z.array(z.string()).default([]),
 });
 

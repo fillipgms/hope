@@ -12,31 +12,31 @@ export const criarProduto = async (values: z.infer<typeof ProdutoSchema>) => {
         return { error: "Campos inválidos!" };
     }
 
-    const { nome, descricao, preco, categoria, colecao, fotos } =
+    const { name, description, price, category, collection, pictures } =
         validatedFields.data;
 
-    const existingProduct = await getProductByName(nome);
+    const existingProduct = await getProductByName(name);
 
     if (existingProduct) return { error: "Esse produto já existee!" };
 
-    await db.produto.create({
+    await db.product.create({
         data: {
-            nome,
-            descricao,
-            fotos: {
-                create: fotos.map((foto) => ({ url: foto })),
+            name,
+            description,
+            pictures: {
+                create: pictures.map((foto) => ({ url: foto })),
             },
-            preco,
-            categoria: {
+            price,
+            category: {
                 connectOrCreate: {
-                    where: { nomeCategoria: categoria },
-                    create: { nomeCategoria: categoria },
+                    where: { categoryName: category },
+                    create: { categoryName: category },
                 },
             },
-            colecao: {
+            collection: {
                 connectOrCreate: {
-                    where: { nomeColecao: colecao },
-                    create: { nomeColecao: colecao },
+                    where: { collectionName: collection },
+                    create: { collectionName: collection },
                 },
             },
         },
