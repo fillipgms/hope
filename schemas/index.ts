@@ -44,6 +44,7 @@ export const ProdutoSchema = z.object({
         message: "Selecione a coleção do produto",
     }),
     fotos: z.array(z.string()).default([]),
+    cartItem: z.array(z.string()).default([]),
 });
 
 export const ResetSchema = z.object({
@@ -56,4 +57,17 @@ export const NewPasswordSchema = z.object({
     password: z.string().min(6, {
         message: "A senha precisa ter 6 ou mais caracteres",
     }),
+});
+
+export const CartItemSchema = z.object({
+    productId: z.string().min(1, {
+        message: "Informe o ID do produto",
+    }),
+    quantity: z.number().int().min(1, {
+        message: "A quantidade deve ser pelo menos 1",
+    }),
+});
+
+export const CartSchema = z.object({
+    items: z.array(CartItemSchema).default([]),
 });

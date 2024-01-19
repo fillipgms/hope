@@ -5,6 +5,8 @@ import { getUserById } from "./data/user";
 import { db } from "./lib/db";
 import authConfig from "./auth.config";
 import { UserRole } from "@prisma/client";
+import { getCartByUserId } from "./data/carrinho";
+import { getCartItemsByCartId } from "./data/itensNoCarrinho";
 
 export const {
     handlers: { GET, POST },
@@ -48,6 +50,10 @@ export const {
                 session.user.role = token.role as UserRole;
             }
 
+            if (token.cart) {
+                session.user.cart = token.cart as models.CartItemProps[];
+            }
+
             return session;
         },
 
@@ -59,6 +65,16 @@ export const {
             if (!existingUser) return token;
 
             token.role = existingUser.role;
+
+            const existingCart = await getCartByUserId(token.sub);
+
+            if (!existingCart) return token;
+
+            const cartItems = await getCartItemsByCartId(existingCart.id);
+
+            if (!cartItems) return token;
+
+            token.cart = cartItems;
 
             return token;
         },

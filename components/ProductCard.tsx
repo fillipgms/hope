@@ -2,8 +2,9 @@ import React from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import AdicionarAoCarrinhoButton from "./AdicionarAoCarrinhoButton";
 
-const ProductCard = ({ nome, fotos, preco }: models.ProdutoProps) => {
+const ProductCard = ({ id, nome, fotos, preco }: models.ProdutoProps) => {
     return (
         <Card className="md:w-72 overflow-hidden">
             <CardHeader className="text-center px-0 pt-0 pb-6">
@@ -24,9 +25,7 @@ const ProductCard = ({ nome, fotos, preco }: models.ProdutoProps) => {
                 </div>
             </CardContent>
             <CardFooter>
-                <Button className="w-full min-h-9 h-min whitespace-normal bg-hope-primary text-hope-dark hover:bg-hope-primary/70">
-                    Adicionar ao carrinho
-                </Button>
+                <AdicionarAoCarrinhoButton productId={id} />
             </CardFooter>
         </Card>
     );
