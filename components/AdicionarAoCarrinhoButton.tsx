@@ -18,7 +18,12 @@ const AdicionarAoCarrinhoButton = ({
     const user = useCurrentUser();
 
     const addToCart = () => {
-        if (user?.cart.find((item) => item.productId === productId)) {
+        if (
+            user?.cart?.find(
+                (item) =>
+                    item.productId === productId && item.quantity === quantity
+            )
+        ) {
             setError("item já existente no carrinho");
 
             setTimeout(() => {
