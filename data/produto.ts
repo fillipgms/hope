@@ -1,3 +1,4 @@
+"use server";
 import { db } from "@/lib/db";
 
 export const getProductById = async (productId: string) => {
@@ -26,10 +27,44 @@ export const getProductByName = async (productName: string) => {
     }
 };
 
+export const getProductsByCategory = async (productsCategory: string) => {
+    try {
+        const products = await db.product.findMany({
+            where: {
+                category: {
+                    categoryName: productsCategory,
+                },
+            },
+            include: { pictures: true },
+        });
+
+        return products;
+    } catch {
+        return null;
+    }
+};
+
+export const getProductsByCollection = async (productCollection: string) => {
+    try {
+        const products = await db.product.findMany({
+            where: {
+                collection: {
+                    collectionName: productCollection,
+                },
+            },
+            include: { pictures: true },
+        });
+
+        return products;
+    } catch {
+        return null;
+    }
+};
+
 export const getAllProducts = async () => {
     try {
         const products = await db.product.findMany({
-            include: { pictures: true },
+            include: { pictures: true, category: true, collection: true },
         });
 
         return products;

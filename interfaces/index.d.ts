@@ -4,7 +4,6 @@ namespace models {
         url: string;
         produtoId?: string;
     }
-
     interface ProdutoProps {
         id: string;
         name: string;
@@ -13,19 +12,27 @@ namespace models {
         categoryId: string;
         collectionId: string;
         pictures: FotoProps[];
+        collection: {
+            id: string;
+            collectionName: string;
+        };
+        category: {
+            id: string;
+            categoryName: string;
+        };
         cartItem?: CartItemProps[];
     }
 
     interface ColecaoProps {
         id: string;
-        nomeColecao: string;
-        produtos: ProdutoProps[];
+        collectionName: string;
+        produtos?: ProdutoProps[];
     }
 
     interface CategoriaProps {
         id: string;
-        nomeCategoria: string;
-        produtos: ProdutoProps[];
+        categoryName: string;
+        produtos?: ProdutoProps[];
     }
 
     interface CartItemProps {

@@ -1,11 +1,5 @@
 import ProductCarousel from "@/components/ProductCarousel";
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-} from "@/components/ui/carousel";
 import { getProductById } from "@/data/produto";
-import Image from "next/image";
 
 interface ProductPageProps {
     params: {

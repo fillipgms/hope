@@ -5,7 +5,7 @@ import autumn from "@/public/images/autumn.jpg";
 
 const Colecoes = () => {
     return (
-        <section className="grid grid-cols-1 md:grid-cols-2 pt-16 px-4 gap-5 min-h-[70vh]">
+        <section className="grid grid-cols-1 md:grid-cols-2 pt-12 px-4 gap-5 min-h-[70vh]">
             <div
                 className="row-span-2 bg-cover bg-center flex items-center justify-center text-3xl text-white font-bold cursor-pointer rounded-md capitalize"
                 style={{
