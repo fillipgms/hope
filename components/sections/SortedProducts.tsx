@@ -6,56 +6,53 @@ import { getAllProducts } from "@/data/produto";
 import ProductCard from "../ProductCard";
 import { MoonLoader } from "react-spinners";
 
-function isAvailable(arr1?: string, arr2?: string[]) {
-    if (!arr1 || !arr2) return true;
-
-    return arr2?.includes(arr1);
-}
-
 const SortedProducts = () => {
-    const [products, setProducts] = useState<models.ProdutoProps[] | null>([]);
-    useEffect(() => {
-        async function fetchProducts() {
-            const produtos = await getAllProducts();
-            setProducts(produtos);
-        }
-        fetchProducts();
-    });
-
+    const [products, setProducts] = useState<models.ProdutoProps[] | null>(
+        null
+    );
     const searchParams = useSearchParams();
     const paramsObj = convertSrtingToQueriesObject(searchParams);
 
+    useEffect(() => {
+        async function fetchProducts() {
+            if (!products) {
+                const produtos = await getAllProducts();
+                setProducts(produtos);
+            }
+        }
+        fetchProducts();
+    }, [products]);
+
     let filteredProducts = products?.filter((product) => {
-        const hasCategories = isAvailable(
-            product.category.categoryName,
-            paramsObj?.category
+        return (
+            (!paramsObj.category ||
+                paramsObj.category.includes(product.category.categoryName)) &&
+            (!paramsObj.collection ||
+                paramsObj.collection.includes(
+                    product.collection.collectionName
+                ))
         );
-        const hasCollection = isAvailable(
-            product.collection.collectionName,
-            paramsObj.collection
-        );
-        return hasCategories && hasCollection;
     });
 
     if (!products || products.length === 0) {
         return (
             <div className="flex items-center justify-center h-full w-full">
-                <MoonLoader />
+                <MoonLoader color="#276FBF" />
             </div>
         );
     }
 
-    if (Object.keys(paramsObj).length === 0) {
-        filteredProducts = products || undefined;
+    if (!Object.keys(paramsObj).length) {
+        filteredProducts = products;
     }
 
-    if (filteredProducts?.length === 0) {
-        return <p>Nenhum produto disponnível</p>;
+    if (!filteredProducts || filteredProducts.length === 0) {
+        return <p>Nenhum produto disponível</p>;
     }
 
     return (
         <div className="flex flex-wrap justify-center gap-5 w-full">
-            {filteredProducts?.map((produto, index) => (
+            {filteredProducts.map((produto, index) => (
                 <ProductCard {...produto} key={index} />
             ))}
         </div>

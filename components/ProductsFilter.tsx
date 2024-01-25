@@ -5,7 +5,6 @@ import {
     useRouter,
     useSearchParams,
 } from "next/navigation";
-import {} from "next/navigation";
 import React, {
     ChangeEvent,
     ComponentPropsWithoutRef,
@@ -13,24 +12,10 @@ import React, {
     useEffect,
     useState,
 } from "react";
+import { IoIosArrowDown } from "react-icons/io";
 
-const caetgories = ["paletas", "pele", "lábios"];
-const collections = ["spring's here", "winter feels", "autumn breeze"];
-
-const filterOptions = [
-    {
-        id: "category",
-        title: "categorias",
-        options: caetgories,
-        type: "checkbox",
-    },
-    {
-        id: "collection",
-        title: "Coleções",
-        options: collections,
-        type: "checkbox",
-    },
-];
+import { getAllCategories } from "@/data/categoria";
+import { getAllCollections } from "@/data/collection";
 
 function checkValidQuery(queries: string[]) {
     return queries.filter((query) => query !== "").length > 0;
@@ -52,11 +37,9 @@ export function convertSrtingToQueriesObject(
 }
 
 function convertValidStringQueries(queries: Record<string, string[]>) {
-    let q = "";
-    for (let [key, value] of Object.entries(queries)) {
-        q = q + `${q === "" ? "" : "&"}${key}=${value}`;
-    }
-    return q;
+    return Object.entries(queries)
+        .map(([key, value]) => `${key}=${value.join(",")}`)
+        .join("&");
 }
 
 const ProductsFilter = () => {
@@ -66,11 +49,48 @@ const ProductsFilter = () => {
     const [selectedFilterQueries, setSelectedFilterQueries] = useState<
         Record<string, string[]>
     >({});
+    const [categories, setCategories] = useState<string[]>([]);
+    const [collections, setCollections] = useState<string[]>([]);
+    const [expandedOptions, setExpandedOptions] = useState<string[]>([]);
 
     useEffect(() => {
         const paramsObj = convertSrtingToQueriesObject(searchParams);
         setSelectedFilterQueries(paramsObj);
     }, [searchParams]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const categoriesData = await getAllCategories();
+            if (categoriesData) {
+                setCategories(categoriesData.map((cat) => cat.categoryName));
+            }
+        };
+
+        const fetchCollections = async () => {
+            const collectionData = await getAllCollections();
+            if (collectionData) {
+                setCollections(collectionData.map((col) => col.collectionName));
+            }
+        };
+
+        fetchCategories();
+        fetchCollections();
+    }, []);
+
+    const filterOptions = [
+        {
+            id: "category",
+            title: "categorias",
+            options: categories || [],
+            type: "checkbox",
+        },
+        {
+            id: "collection",
+            title: "Coleções",
+            options: collections || [],
+            type: "checkbox",
+        },
+    ];
 
     function handleSelectFilterOptions(e: ChangeEvent<HTMLInputElement>) {
         const name = e.target.name;
@@ -108,12 +128,34 @@ const ProductsFilter = () => {
         );
     }
 
+    const toggleOptions = (id: string) => {
+        setExpandedOptions((prev) =>
+            prev.includes(id)
+                ? prev.filter((option) => option !== id)
+                : [...prev, id]
+        );
+    };
+
     return (
         <div className="max-w-56 space-y-6 sticky top-24 h-fit">
             {filterOptions.map(({ id, title, type, options }) => (
                 <div className="border-b pb-4" key={id}>
-                    <p className="font-medium mb-4">{title}</p>
-                    <div className="space-y-2">
+                    <div
+                        className="flex cursor-pointer justify-between items-center mb-4 w-full"
+                        onClick={() => toggleOptions(id)}
+                    >
+                        <p className="font-medium ">{title}</p>
+                        <IoIosArrowDown
+                            className={`transition-all duration-300 ${
+                                expandedOptions.includes(id) ? "rotate-180" : ""
+                            }`}
+                        />
+                    </div>
+                    <div
+                        className={`space-y-2 overflow-hidden transition-all duration-300 h-${
+                            expandedOptions.includes(id) ? "full" : "0"
+                        }`}
+                    >
                         {options.map((value) => (
                             <CheckboxAndRadioGroup key={value}>
                                 <CheckboxAndRadioItem

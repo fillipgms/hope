@@ -3,7 +3,7 @@
 import CardWrapper from "./CardWrapper";
 
 import { useCallback, useEffect, useState } from "react";
-import { PropagateLoader } from "react-spinners";
+import { MoonLoader } from "react-spinners";
 import { useSearchParams } from "next/navigation";
 import FormError from "../FormError";
 import FormSucces from "../FormSuccess";
@@ -47,7 +47,7 @@ const NewVerificationForm = () => {
             backButtonLabel="voltar ao login"
         >
             <div className="flex items-center w-full justify-center">
-                {!success && !error && <PropagateLoader color="#276FBF" />}
+                {!success && !error && <MoonLoader color="#276FBF" />}
 
                 <FormSucces message={success} />
                 {!success && <FormError message={error} />}
