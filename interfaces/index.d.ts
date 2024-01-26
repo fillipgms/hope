@@ -40,6 +40,7 @@ namespace models {
         productId: string;
         quantity: number;
         cartId: string;
+        product: ProdutoProps;
     }
 
     interface CartProps {

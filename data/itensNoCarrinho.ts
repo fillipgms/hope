@@ -12,7 +12,18 @@ export const getCartItemsById = async (id: string) => {
 
 export const getCartItemsByCartId = async (id: string) => {
     try {
-        const carrinho = await db.cartItem.findMany({ where: { cartId: id } });
+        const carrinho = await db.cartItem.findMany({
+            where: { cartId: id },
+            include: {
+                product: {
+                    include: {
+                        pictures: true,
+                        category: true,
+                        collection: true,
+                    },
+                },
+            },
+        });
 
         return carrinho;
     } catch {

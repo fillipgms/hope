@@ -3,7 +3,7 @@ import NextAuth, { type DefaultSession } from "next-auth";
 
 export type ExtentedUser = DefaultSession["user"] & {
     role: UserRole;
-    cart: models.CartItemProps[];
+    cart: models.CartProps;
 };
 
 declare module "next-auth" {

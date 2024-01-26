@@ -12,7 +12,10 @@ export const getCartById = async (id: string) => {
 
 export const getCartByUserId = async (id: string) => {
     try {
-        const carrinhno = await db.cart.findUnique({ where: { userId: id } });
+        const carrinhno = await db.cart.findUnique({
+            where: { userId: id },
+            include: { items: true },
+        });
 
         return carrinhno;
     } catch {

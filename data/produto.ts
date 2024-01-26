@@ -5,7 +5,7 @@ export const getProductById = async (productId: string) => {
     try {
         const product = await db.product.findUnique({
             where: { id: productId },
-            include: { pictures: true },
+            include: { pictures: true, category: true, collection: true },
         });
 
         return product;
@@ -18,7 +18,7 @@ export const getProductByName = async (productName: string) => {
     try {
         const product = await db.product.findFirst({
             where: { name: productName },
-            include: { pictures: true },
+            include: { pictures: true, category: true, collection: true },
         });
 
         return product;
@@ -35,7 +35,7 @@ export const getProductsByCategory = async (productsCategory: string) => {
                     categoryName: productsCategory,
                 },
             },
-            include: { pictures: true },
+            include: { pictures: true, category: true, collection: true },
         });
 
         return products;
@@ -52,7 +52,7 @@ export const getProductsByCollection = async (productCollection: string) => {
                     collectionName: productCollection,
                 },
             },
-            include: { pictures: true },
+            include: { pictures: true, category: true, collection: true },
         });
 
         return products;

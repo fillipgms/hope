@@ -51,7 +51,7 @@ export const {
             }
 
             if (token.cart) {
-                session.user.cart = token.cart as models.CartItemProps[];
+                session.user.cart = token.cart as models.CartProps[];
             }
 
             return session;
@@ -65,16 +65,11 @@ export const {
             if (!existingUser) return token;
 
             token.role = existingUser.role;
+            token.cart = existingUser.cart;
 
-            const existingCart = await getCartByUserId(token.sub);
+            if (!existingUser.cart) return token;
 
-            if (!existingCart) return token;
-
-            const cartItems = await getCartItemsByCartId(existingCart.id);
-
-            if (!cartItems) return token;
-
-            token.cart = cartItems;
+            token.cart = existingUser.cart;
 
             return token;
         },

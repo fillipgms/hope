@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import StoreProvider from "@/redux/StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,17 +22,21 @@ export default async function RootLayout({
     const session = await auth();
 
     return (
-        <SessionProvider session={session}>
-            <EdgeStoreProvider>
-                <html lang="pt-br">
-                    <body className={`${inter.className} min-h-dvh relative`}>
-                        <Header />
-                        <div className="h-dvh pt-[85px] bg-slate-50">
-                            {children}
-                        </div>
-                    </body>
-                </html>
-            </EdgeStoreProvider>
-        </SessionProvider>
+        <StoreProvider>
+            <SessionProvider session={session}>
+                <EdgeStoreProvider>
+                    <html lang="pt-br">
+                        <body
+                            className={`${inter.className} min-h-dvh relative`}
+                        >
+                            <Header />
+                            <div className="h-dvh pt-[85px] bg-slate-50">
+                                {children}
+                            </div>
+                        </body>
+                    </html>
+                </EdgeStoreProvider>
+            </SessionProvider>
+        </StoreProvider>
     );
 }

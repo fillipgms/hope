@@ -3,6 +3,9 @@ import React, { useState, useTransition } from "react";
 import { Button } from "./ui/button";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { adicionarAoCarrinho } from "@/actions/adicionarAoCarrinho";
+import { getProductById } from "@/data/produto";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart as addToCartAction } from "@/redux/reducer/cartReducer";
 
 interface AdicionarAoCarrinhoButtonProps {
     productId: string;
@@ -16,10 +19,11 @@ const AdicionarAoCarrinhoButton = ({
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | null>(null);
     const user = useCurrentUser();
+    const dispatch = useDispatch();
 
-    const addToCart = () => {
+    const addToCartHandler = async () => {
         if (
-            user?.cart?.find(
+            user?.cart?.items?.find(
                 (item) =>
                     item.productId === productId && item.quantity === quantity
             )
@@ -32,6 +36,8 @@ const AdicionarAoCarrinhoButton = ({
             return;
         }
 
+        const product = await getProductById(productId);
+
         startTransition(() => {
             startTransition(() => {
                 adicionarAoCarrinho(
@@ -40,12 +46,13 @@ const AdicionarAoCarrinhoButton = ({
                 );
             });
         });
+        dispatch(addToCartAction({ productId, quantity, product }));
     };
 
     return (
         <Button
             disabled={isPending || !!error}
-            onClick={addToCart}
+            onClick={addToCartHandler}
             className="w-full min-h-9 h-min whitespace-normal bg-hope-primary text-hope-dark hover:bg-hope-primary/70"
         >
             {error || "Adicionar ao carrinho"}
