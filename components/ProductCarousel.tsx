@@ -11,6 +11,8 @@ import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
 
 const ProductCarousel = (product: models.ProdutoProps) => {
+    const reversedPictures = [...product.pictures].reverse();
+
     return (
         <Carousel
             plugins={[
@@ -20,8 +22,8 @@ const ProductCarousel = (product: models.ProdutoProps) => {
             ]}
         >
             <CarouselContent>
-                {product.pictures.reverse().map((picture) => (
-                    <CarouselItem>
+                {reversedPictures.map((picture, key) => (
+                    <CarouselItem key={key}>
                         <Image
                             src={picture.url}
                             alt="foto do produto"
@@ -33,8 +35,8 @@ const ProductCarousel = (product: models.ProdutoProps) => {
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious className="md:inline-flex hidden" />
+            <CarouselNext className="md:inline-flex hidden" />
         </Carousel>
     );
 };

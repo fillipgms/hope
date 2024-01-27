@@ -5,7 +5,11 @@ import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { adicionarAoCarrinho } from "@/actions/adicionarAoCarrinho";
 import { getProductById } from "@/data/produto";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart as addToCartAction } from "@/redux/reducer/cartReducer";
+import {
+    addToCart as addToCartAction,
+    editCartItem,
+} from "@/redux/reducer/cartReducer";
+import { editItemInCart } from "@/actions/editItemInCart";
 
 interface AdicionarAoCarrinhoButtonProps {
     productId: string;
@@ -19,14 +23,24 @@ const AdicionarAoCarrinhoButton = ({
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | null>(null);
     const user = useCurrentUser();
+    const cartItems = useSelector(
+        (state: { cart: { cartItems: models.CartItemProps[] } }) =>
+            state.cart.cartItems
+    );
     const dispatch = useDispatch();
 
-    const addToCartHandler = async () => {
+    const addToCartHandler = () => {
+        const existingReduxCartItem = cartItems.find(
+            (item) => item.productId === productId
+        );
+        const existingDbCartItem = user?.cart?.items?.find(
+            (item) => item.productId === productId
+        );
+
         if (
-            user?.cart?.items?.find(
-                (item) =>
-                    item.productId === productId && item.quantity === quantity
-            )
+            (existingReduxCartItem &&
+                existingReduxCartItem.quantity === quantity) ||
+            (existingDbCartItem && existingDbCartItem.quantity === quantity)
         ) {
             setError("item já existente no carrinho");
 
@@ -36,24 +50,38 @@ const AdicionarAoCarrinhoButton = ({
             return;
         }
 
-        const product = await getProductById(productId);
-
         startTransition(() => {
-            startTransition(() => {
-                adicionarAoCarrinho(
-                    { items: [{ productId, quantity }] },
-                    user?.id || ""
-                );
+            startTransition(async () => {
+                const product = await getProductById(productId);
+
+                if (
+                    (existingReduxCartItem &&
+                        existingReduxCartItem.quantity !== quantity) ||
+                    (existingDbCartItem &&
+                        existingDbCartItem.quantity !== quantity)
+                ) {
+                    dispatch(editCartItem({ id: productId, quantity }));
+                    await editItemInCart({
+                        userId: user?.id || "",
+                        productId,
+                        quantity,
+                    });
+                } else {
+                    dispatch(addToCartAction({ productId, quantity, product }));
+                    adicionarAoCarrinho(
+                        { items: [{ productId, quantity }] },
+                        user?.id || ""
+                    );
+                }
             });
         });
-        dispatch(addToCartAction({ productId, quantity, product }));
     };
 
     return (
         <Button
             disabled={isPending || !!error}
             onClick={addToCartHandler}
-            className="w-full min-h-9 h-min whitespace-normal bg-hope-primary text-hope-dark hover:bg-hope-primary/70"
+            className="w-full px-2 min-h-9 h-min whitespace-normal bg-hope-primary text-hope-dark hover:bg-hope-primary/70"
         >
             {error || "Adicionar ao carrinho"}
         </Button>
