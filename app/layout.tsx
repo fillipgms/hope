@@ -22,9 +22,9 @@ export default async function RootLayout({
     const session = await auth();
 
     return (
-        <StoreProvider>
-            <SessionProvider session={session}>
-                <EdgeStoreProvider>
+        <SessionProvider session={session}>
+            <EdgeStoreProvider>
+                <StoreProvider>
                     <html lang="pt-br">
                         <body
                             className={`${inter.className} min-h-dvh relative`}
@@ -35,8 +35,8 @@ export default async function RootLayout({
                             </div>
                         </body>
                     </html>
-                </EdgeStoreProvider>
-            </SessionProvider>
-        </StoreProvider>
+                </StoreProvider>
+            </EdgeStoreProvider>
+        </SessionProvider>
     );
 }

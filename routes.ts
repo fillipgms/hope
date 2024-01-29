@@ -2,7 +2,8 @@ export const publicRoutes = [
     "/",
     "/auth/verificacao",
     "/produtos",
-    "/produtos/[id]",
+    "/produtos/*",
+    "/carrinho",
 ];
 
 export const authRoutes = [

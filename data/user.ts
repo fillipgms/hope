@@ -17,7 +17,13 @@ export const getUserById = async (id: string) => {
             include: {
                 cart: {
                     include: {
-                        items: true,
+                        items: {
+                            include: {
+                                product: {
+                                    include: { pictures: true },
+                                },
+                            },
+                        },
                     },
                 },
             },

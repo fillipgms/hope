@@ -6,7 +6,6 @@ import { db } from "./lib/db";
 import authConfig from "./auth.config";
 import { UserRole } from "@prisma/client";
 import { getCartByUserId } from "./data/carrinho";
-import { getCartItemsByCartId } from "./data/itensNoCarrinho";
 
 export const {
     handlers: { GET, POST },
@@ -51,7 +50,7 @@ export const {
             }
 
             if (token.cart) {
-                session.user.cart = token.cart as models.CartProps[];
+                session.user.cart = token.cart as models.CartProps;
             }
 
             return session;

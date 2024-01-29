@@ -24,6 +24,7 @@ const cartReducer = (
     state: CartState = initialState,
     action: { type: string; payload?: any }
 ): CartState => {
+    console.log(action.type);
     switch (action.type) {
         case "ADD_TO_CART":
             return {

@@ -62,15 +62,15 @@ namespace models {
 
     interface UserProps {
         id: string;
-        name: string | null;
-        email: string | null;
-        emailVerified: Date | null;
-        password: string | null;
-        image: string | null;
+        name?: string | null | undefined;
+        email?: string | null | undefined;
+        emailVerified?: Date | null;
+        password?: string | null;
+        image?: string | null | undefined;
         role: UserRole;
-        accounts: AccountProps[];
+        accounts?: AccountProps[];
         cart: CartProps | null;
-        addresses: AddressProps[];
+        addresses?: AddressProps[];
     }
 
     interface AccountProps {

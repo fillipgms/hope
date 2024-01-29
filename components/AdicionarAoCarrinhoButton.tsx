@@ -10,6 +10,7 @@ import {
     editCartItem,
 } from "@/redux/reducer/cartReducer";
 import { editItemInCart } from "@/actions/editItemInCart";
+import updateProductInCart from "@/hooks/updateProductInCart";
 
 interface AdicionarAoCarrinhoButtonProps {
     productId: string;
@@ -60,14 +61,15 @@ const AdicionarAoCarrinhoButton = ({
                     (existingDbCartItem &&
                         existingDbCartItem.quantity !== quantity)
                 ) {
-                    dispatch(editCartItem({ id: productId, quantity }));
-                    await editItemInCart({
-                        userId: user?.id || "",
-                        productId,
-                        quantity,
-                    });
+                    updateProductInCart({ productId, quantity, user });
                 } else {
-                    dispatch(addToCartAction({ productId, quantity, product }));
+                    dispatch(
+                        addToCartAction({
+                            productId,
+                            quantity,
+                            product: product as models.ProdutoProps,
+                        })
+                    );
                     adicionarAoCarrinho(
                         { items: [{ productId, quantity }] },
                         user?.id || ""
