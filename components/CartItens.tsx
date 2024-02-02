@@ -1,27 +1,26 @@
 "use client";
-import { editItemInCart } from "@/actions/editItemInCart";
-import updateProductInCart from "@/hooks/updateProductInCart";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+
 import { editCartItem } from "@/redux/reducer/cartReducer";
+import { useDispatch } from "react-redux";
 import Image from "next/image";
 import { useState, useTransition } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Quantity = (item: models.CartItemProps) => {
     const [quantity, setQuantity] = useState(item.quantity);
     const [isPending, startTransition] = useTransition();
-    const user = useCurrentUser();
+    const dispatch = useDispatch();
+    const cartItems = useSelector(
+        (state: { cart: { cartItems: models.CartItemProps[] } }) =>
+            state.cart.cartItems
+    );
+
     const productId = item.product.id;
 
     const handleQuantityChange = (newQuantity: number) => {
         setQuantity(newQuantity);
         startTransition(() => {
-            editItemInCart({
-                userId: user?.id || "",
-                productId,
-                quantity,
-            });
-            editCartItem({ id: productId, quantity });
+            dispatch(editCartItem({ id: productId, quantity: newQuantity }));
         });
     };
 
@@ -86,7 +85,7 @@ const CartItens = () => {
                             />
                         </div>
                         <div className="w-full">
-                            <h4 className=" text-lg bg-hope-primary py-1 px-5">
+                            <h4 className=" bg-hope-primary py-1 px-5">
                                 {item.product.name}
                             </h4>
                             <div className="pl-5 h-20 flex flex-col justify-center">

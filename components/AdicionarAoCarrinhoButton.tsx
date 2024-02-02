@@ -10,7 +10,6 @@ import {
     editCartItem,
 } from "@/redux/reducer/cartReducer";
 import { editItemInCart } from "@/actions/editItemInCart";
-import updateProductInCart from "@/hooks/updateProductInCart";
 
 interface AdicionarAoCarrinhoButtonProps {
     productId: string;
@@ -61,7 +60,12 @@ const AdicionarAoCarrinhoButton = ({
                     (existingDbCartItem &&
                         existingDbCartItem.quantity !== quantity)
                 ) {
-                    updateProductInCart({ productId, quantity, user });
+                    dispatch(editCartItem({ id: productId, quantity })),
+                        editItemInCart({
+                            userId: user?.id || "",
+                            productId,
+                            quantity,
+                        });
                 } else {
                     dispatch(
                         addToCartAction({

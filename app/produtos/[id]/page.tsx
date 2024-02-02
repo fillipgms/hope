@@ -25,7 +25,9 @@ export default async function ProductPage({
     return (
         <section className="h-full md:flex md:items-center md:justify-center">
             <div
-                style={{ backgroundImage: `url(${product.pictures[0].url})` }}
+                style={{
+                    backgroundImage: `url(${product.pictures[0].url})`,
+                }}
                 className="md:block hidden h-full flex-1 bg-cover bg-no-repeat bg-center"
             ></div>
             <div className="md:flex-1 relative md:block flex flex-col md:justify-center md:items-center h-full">
@@ -40,7 +42,7 @@ export default async function ProductPage({
                         <p className="text-justify">{product.description}</p>
                         <div className="flex items-center pt-3 gap-5">
                             <h3 className="text-xl font-semibold">
-                                {product.price}
+                                R$ {product.price}
                             </h3>
                         </div>
                         <QuantityAndAddButtons product={product} />

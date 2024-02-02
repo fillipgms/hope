@@ -24,7 +24,6 @@ const cartReducer = (
     state: CartState = initialState,
     action: { type: string; payload?: any }
 ): CartState => {
-    console.log(action.type);
     switch (action.type) {
         case "ADD_TO_CART":
             return {
@@ -32,17 +31,17 @@ const cartReducer = (
                 cartItems: [...state.cartItems, action.payload],
             };
         case "REMOVE_FROM_CART":
-            // Implemente conforme necessário
             return state;
         case "EDIT_CART_ITEM":
             return {
                 ...state,
                 cartItems: state.cartItems.map((item) =>
-                    item.id === action.payload.id
+                    item.product.id === action.payload.id
                         ? { ...item, quantity: action.payload.quantity }
                         : item
                 ),
             };
+
         case "SET_CART":
             return {
                 ...state,

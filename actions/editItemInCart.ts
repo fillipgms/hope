@@ -14,7 +14,6 @@ export const editItemInCart = async ({
     const cart = await getCartByUserId(userId);
 
     if (!cart) {
-        console.log("cart error");
         return { error: "esse usuário não possui carrinho" };
     }
 
@@ -23,7 +22,6 @@ export const editItemInCart = async ({
     );
 
     if (!selectedItem) {
-        console.log("selected item error");
         return { error: "esse produto não existe no carrinho" };
     }
 

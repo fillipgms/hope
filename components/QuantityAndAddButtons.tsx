@@ -27,6 +27,7 @@ const QuantityAndAddButtons = ({
                     value={quantity}
                     className="bg-hope-primary w-full text-center m-0 remove-arrow"
                     min={1}
+                    readOnly
                 />
                 <button
                     className="px-1"
