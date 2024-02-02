@@ -77,7 +77,17 @@ export const getAllProducts = async () => {
             include: { pictures: true, category: true, collection: true },
         });
 
-        return products;
+        const productsWithConvertedPrice = products.map((product) => {
+            const { price, ...restOfProduct } = product;
+            const convertedPrice = Number(price);
+
+            return {
+                ...restOfProduct,
+                price: convertedPrice,
+            };
+        });
+
+        return productsWithConvertedPrice;
     } catch {
         return null;
     }

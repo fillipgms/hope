@@ -13,13 +13,10 @@ const CartItensWizard = () => {
     useEffect(() => {
         let subtotal = 0;
         cartItems.forEach((item: models.CartItemProps) => {
-            const precoNumerico = parseFloat(
-                item.product.price.replace("R$", "").replace(",", ".")
-            );
             if (!item.quantity) {
                 item.quantity = 1;
             }
-            subtotal += precoNumerico * item.quantity;
+            subtotal += item.product.price * item.quantity;
         });
 
         // Arredonda o subtotal para 2 casas decimais
