@@ -14,10 +14,10 @@ const CartLength = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (user) {
+        if (user?.cart) {
             dispatch(setCart(user.cart.items));
         }
-    }, [user?.cart.items]);
+    }, [user?.cart?.items]);
 
     useEffect(() => {
         setItens(cartItems);

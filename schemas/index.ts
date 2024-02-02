@@ -34,7 +34,7 @@ export const ProdutoSchema = z.object({
     description: z.string().min(1, {
         message: "Insira a descrição do produto",
     }),
-    price: z.string().min(1, {
+    price: z.number().min(1, {
         message: "Insira o preço do produto",
     }),
     category: z.string().min(1, {

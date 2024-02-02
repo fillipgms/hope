@@ -8,7 +8,7 @@ namespace models {
         id: string;
         name: string;
         description: string;
-        price: string;
+        price: int;
         categoryId: string;
         collectionId: string;
         pictures: FotoProps[];
@@ -50,16 +50,6 @@ namespace models {
         userId: string;
     }
 
-    interface AddressProps {
-        id: string;
-        street: string;
-        city: string;
-        state: string;
-        zip: string;
-        user: UserProps;
-        userId: string;
-    }
-
     interface UserProps {
         id: string;
         name?: string | null | undefined;
@@ -70,7 +60,18 @@ namespace models {
         role: UserRole;
         accounts?: AccountProps[];
         cart: CartProps | null;
-        addresses?: AddressProps[];
+        orders?: OrderProps[];
+    }
+
+    interface Order {
+        id: string;
+        items: CartItemProps[];
+        user: UserProps;
+        userId: string;
+        createdAt: Date;
+        updatedAt: Date;
+        status: String;
+        total: number;
     }
 
     interface AccountProps {

@@ -8,7 +8,17 @@ export const getProductById = async (productId: string) => {
             include: { pictures: true, category: true, collection: true },
         });
 
-        return product;
+        if (product) {
+            const { price, ...restOfProduct } = product;
+            const convertedPrice = Number(price);
+
+            return {
+                ...restOfProduct,
+                price: convertedPrice,
+            };
+        }
+
+        return null;
     } catch {
         return null;
     }

@@ -25,7 +25,7 @@ const ProductCard = ({ id, name, pictures, price }: models.ProdutoProps) => {
                     />
                     <div className="flex flex-wrap items-center justify-between  py-1">
                         <span>TODO: estrelas</span>
-                        <h4 className="text-xl ">{price}</h4>
+                        <h4 className="text-lg ">R$ {price}</h4>
                     </div>
                 </CardContent>
             </Link>

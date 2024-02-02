@@ -1,4 +1,3 @@
-import AdicionarAoCarrinhoButton from "@/components/AdicionarAoCarrinhoButton";
 import ProductCarousel from "@/components/ProductCarousel";
 import QuantityAndAddButtons from "@/components/QuantityAndAddButtons";
 import { getProductById } from "@/data/produto";

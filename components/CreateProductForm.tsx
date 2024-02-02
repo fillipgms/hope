@@ -32,6 +32,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import MoneyInput from "./MoneyInput";
 
 const CreateProdutoForm = () => {
     const [isPending, startTransition] = useTransition();
@@ -60,7 +61,7 @@ const CreateProdutoForm = () => {
         defaultValues: {
             name: "",
             description: "",
-            price: "",
+            price: 0,
             category: "",
             collection: "",
             pictures: [],
@@ -179,27 +180,13 @@ const CreateProdutoForm = () => {
                             </FormItem>
                         )}
                     />
-                    <FormField
-                        control={form.control}
+                    <MoneyInput
+                        form={form}
+                        label="Preço"
                         name="price"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormControl>
-                                    <div className="flex items-center">
-                                        <span className="bg-[hsl(214.3_31.8%_91.4%)] py-[0.35rem] px-1 rounded-l-md">
-                                            R$
-                                        </span>
-                                        <Input
-                                            {...field}
-                                            disabled={isPending}
-                                            placeholder="00,00"
-                                            className=" rounded-l-none"
-                                        />
-                                    </div>
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
+                        placeholder="insira o preço do produto"
+                        isDisabled={isPending}
+                        key={key}
                     />
                     <FormField
                         control={form.control}

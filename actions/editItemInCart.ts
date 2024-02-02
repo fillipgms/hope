@@ -30,8 +30,9 @@ export const editItemInCart = async ({
             where: { id: selectedItem.id },
             data: { quantity: quantity },
         });
+
         return updatedProduct;
     } catch (error) {
-        return { error: "Erro ao adicionar ao carrinho." };
+        return;
     }
 };

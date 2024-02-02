@@ -5,21 +5,25 @@ import { useDispatch } from "react-redux";
 import Image from "next/image";
 import { useState, useTransition } from "react";
 import { useSelector } from "react-redux";
+import { editItemInCart } from "@/actions/editItemInCart";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 const Quantity = (item: models.CartItemProps) => {
     const [quantity, setQuantity] = useState(item.quantity);
     const [isPending, startTransition] = useTransition();
     const dispatch = useDispatch();
-    const cartItems = useSelector(
-        (state: { cart: { cartItems: models.CartItemProps[] } }) =>
-            state.cart.cartItems
-    );
+    const user = useCurrentUser();
 
     const productId = item.product.id;
 
     const handleQuantityChange = (newQuantity: number) => {
         setQuantity(newQuantity);
         startTransition(() => {
+            editItemInCart({
+                userId: user?.id || "",
+                productId,
+                quantity: newQuantity,
+            });
             dispatch(editCartItem({ id: productId, quantity: newQuantity }));
         });
     };
@@ -95,13 +99,7 @@ const CartItens = () => {
                                 </div>
                                 <p>
                                     total: R${" "}
-                                    {(
-                                        parseFloat(
-                                            item.product.price
-                                                .replace("R$", "")
-                                                .replace(",", ".")
-                                        ) * (item.quantity || 1)
-                                    )
+                                    {(item.product.price * (item.quantity || 1))
                                         .toFixed(2)
                                         .replace(".", ",")}
                                 </p>

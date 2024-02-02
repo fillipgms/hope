@@ -23,7 +23,7 @@ model User {
   role          UserRole     @default(USER)
   accounts      Account[]
   cart          Cart?
-  addresses     Address[]
+  Orders      Order[]
 }
 
 model Account {
@@ -60,16 +60,6 @@ model CartItem {
   cartId    String
 }
 
-model Address {
-  id        String @id @default(cuid())
-  street    String
-  city      String
-  state     String
-  zip       String
-  user      User   @relation(fields: [userId], references: [id])
-  userId    String
-}
-
 model VerificationToken {
   id      String  @id @default(cuid())
   email   String
@@ -92,13 +82,14 @@ model Product {
   id              String @unique @id @default(cuid())
   name            String
   description       String
-  price           String    // Alterado para usar um tipo numérico para preços
+  price           Decimal    // Alterado para usar um tipo numérico para preços
   category        Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId      String
   collection      Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
   collectionId    String
   pictures        ProductPicture[]
   cartItem        CartItem[] 
+  orderItem       OrderItem[]
 }
 
 model ProductPicture {
@@ -118,4 +109,24 @@ model Category {
   id              String  @id @default(cuid())
   categoryName   String @unique
   products        Product[]
+}
+
+model Order {
+  id          String   @id @default(cuid())
+  OrderItem   OrderItem[]
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  status      String
+  total       Float
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  product     Product  @relation(fields: [productId], references: [id])
+  productId   String
+  quantity    Int
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId     String
 }
