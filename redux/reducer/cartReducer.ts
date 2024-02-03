@@ -1,5 +1,5 @@
 export const addToCart = (payload: any) => ({ type: "ADD_TO_CART", payload });
-export const removeFromCart = (payload: any) => ({
+export const removeFromCart = (payload: { id: string }) => ({
     type: "REMOVE_FROM_CART",
     payload,
 });
@@ -31,7 +31,12 @@ const cartReducer = (
                 cartItems: [...state.cartItems, action.payload],
             };
         case "REMOVE_FROM_CART":
-            return state;
+            return {
+                ...state,
+                cartItems: state.cartItems.filter(
+                    (item) => item.product.id !== action.payload.id
+                ),
+            };
         case "EDIT_CART_ITEM":
             return {
                 ...state,

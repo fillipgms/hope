@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     Carousel,
     CarouselContent,
@@ -11,7 +11,7 @@ import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
 
 const ProductCarousel = (product: models.ProdutoProps) => {
-    const reversedPictures = [...product.pictures].reverse();
+    const pictures = product.pictures;
 
     return (
         <Carousel
@@ -22,7 +22,7 @@ const ProductCarousel = (product: models.ProdutoProps) => {
             ]}
         >
             <CarouselContent>
-                {reversedPictures.map((picture, key) => (
+                {pictures.map((picture, key) => (
                     <CarouselItem key={key}>
                         <Image
                             src={picture.url}
@@ -35,8 +35,12 @@ const ProductCarousel = (product: models.ProdutoProps) => {
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious className="md:inline-flex hidden" />
-            <CarouselNext className="md:inline-flex hidden" />
+            {pictures.length >= 2 && (
+                <CarouselPrevious className="md:inline-flex hidden" />
+            )}
+            {pictures.length >= 2 && (
+                <CarouselNext className="md:inline-flex hidden" />
+            )}
         </Carousel>
     );
 };

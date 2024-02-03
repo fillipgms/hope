@@ -1,12 +1,13 @@
 "use client";
 
-import { editCartItem } from "@/redux/reducer/cartReducer";
+import { editCartItem, removeFromCart } from "@/redux/reducer/cartReducer";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
 import { useState, useTransition } from "react";
 import { useSelector } from "react-redux";
 import { editItemInCart } from "@/actions/editItemInCart";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { removeItemInCart } from "@/actions/removeItemInCart";
 
 const Quantity = (item: models.CartItemProps) => {
     const [quantity, setQuantity] = useState(item.quantity);
@@ -28,6 +29,16 @@ const Quantity = (item: models.CartItemProps) => {
         });
     };
 
+    const removeCartItem = () => {
+        startTransition(() => {
+            removeItemInCart({
+                userId: user?.id || "",
+                productId,
+            });
+            dispatch(removeFromCart({ id: productId }));
+        });
+    };
+
     return (
         <div className="flex rounded-full overflow-hidden w-24 ">
             <button
@@ -35,6 +46,8 @@ const Quantity = (item: models.CartItemProps) => {
                 onClick={() => {
                     if (quantity - 1 > 0) {
                         handleQuantityChange(quantity - 1);
+                    } else {
+                        removeCartItem();
                     }
                 }}
                 disabled={isPending}
@@ -44,7 +57,7 @@ const Quantity = (item: models.CartItemProps) => {
             <input
                 type="number"
                 className="bg-hope-primary w-full text-center m-0 remove-arrow  disabled:bg-hope-primary/70"
-                min={1}
+                min={0}
                 value={quantity}
                 readOnly
                 disabled={isPending}
@@ -76,7 +89,7 @@ const CartItens = () => {
                 cartItems.map((item) => (
                     <div
                         key={item.id}
-                        className="flex rounded-md overflow-hidden w-full cursor-pointer shadow-md"
+                        className="flex rounded-md overflow-hidden w-full shadow-md"
                     >
                         <div className="w-36">
                             <Image
@@ -95,6 +108,7 @@ const CartItens = () => {
                             <div className="pl-5 h-20 flex flex-col justify-center">
                                 <div className="flex gap-2 items-center py-1">
                                     <p>{item.product.price}</p>
+
                                     <Quantity {...item} />
                                 </div>
                                 <p>

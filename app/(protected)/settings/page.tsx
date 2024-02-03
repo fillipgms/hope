@@ -19,7 +19,7 @@ const SettingsPage = () => {
     if (!user) {
         return (
             <div className="flex h-full items-center justify-center">
-                <MoonLoader />
+                <MoonLoader color="#276FBF" />
             </div>
         );
     }
