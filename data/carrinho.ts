@@ -14,7 +14,13 @@ export const getCartByUserId = async (id: string) => {
     try {
         const carrinhno = await db.cart.findUnique({
             where: { userId: id },
-            include: { items: true },
+            include: {
+                items: {
+                    include: {
+                        product: true,
+                    },
+                },
+            },
         });
 
         return carrinhno;

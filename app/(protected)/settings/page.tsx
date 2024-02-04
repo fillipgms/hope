@@ -1,21 +1,15 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import UserOrders from "@/components/UserOrders";
+
 import { useCurrentUser } from "@/hooks/useCurrentUser";
-import { setCart } from "@/redux/reducer/cartReducer";
-import { signOut } from "next-auth/react";
+
 import Image from "next/image";
-import { useDispatch } from "react-redux";
+
 import { MoonLoader } from "react-spinners";
 
 const SettingsPage = () => {
     const user = useCurrentUser();
-    const dispatch = useDispatch();
-
-    const onClick = () => {
-        dispatch(setCart([]));
-        signOut();
-    };
 
     if (!user) {
         return (
@@ -41,8 +35,9 @@ const SettingsPage = () => {
                 <h2 className="font-semibold">{user.name}</h2>
             </div>
             <div className=" text-center">
-                <h3 className="font-semibold">Meus pedidos</h3>
-                <div></div>
+                <h3 className="font-semibold py-1 rounded-md">Meus pedidos</h3>
+
+                <UserOrders userId={user.id} />
             </div>
         </main>
     );

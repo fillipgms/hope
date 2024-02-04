@@ -1,10 +1,19 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { Button } from "./ui/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { closeOrder } from "@/actions/closeOrder";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { setCart } from "@/redux/reducer/cartReducer";
+import { redirect, useRouter } from "next/navigation";
 
 const CartItensWizard = () => {
+    const user = useCurrentUser();
+    const dispatch = useDispatch();
+
+    const { push } = useRouter();
     const [total, setTotal] = useState<number>();
+    const [isPending, startTransition] = useTransition();
     const cartItems = useSelector(
         (state: { cart: { cartItems: models.CartItemProps[] } }) =>
             state.cart.cartItems
@@ -19,23 +28,37 @@ const CartItensWizard = () => {
             subtotal += item.product.price * item.quantity;
         });
 
-        // Arredonda o subtotal para 2 casas decimais
         const roundedSubtotal = subtotal.toFixed(2);
 
-        setTotal(parseFloat(roundedSubtotal)); // Converte de volta para número
+        setTotal(parseFloat(roundedSubtotal));
     }, [cartItems]);
+
+    const closeActiveOrder = () => {
+        if (user) {
+            startTransition(async () => {
+                await closeOrder(user?.id || "");
+                dispatch(setCart([]));
+            });
+        } else {
+            push("/auth/login");
+        }
+    };
 
     return (
         <div className="h-fit sticky top-24">
             <div className="space-y-4">
                 <h3 className="text-center">
                     Subtotal ( {cartItems.length}{" "}
-                    {cartItems.length > 1 ? "produtos" : "produto"} ):{" "}
+                    {cartItems.length !== 1 ? "produtos" : "produto"} ):{" "}
                     <span className="font-bold">
                         R$ {total === 0 ? "0,00" : total}
                     </span>
                 </h3>
-                <Button className="w-full px-2 min-h-9 h-min whitespace-normal bg-hope-primary text-hope-dark hover:bg-hope-primary/70">
+                <Button
+                    onClick={closeActiveOrder}
+                    disabled={isPending || cartItems.length === 0}
+                    className="w-full px-2 min-h-9 h-min whitespace-normal bg-hope-primary text-hope-dark hover:bg-hope-primary/70"
+                >
                     Fechar pedido
                 </Button>
             </div>

@@ -59,18 +59,26 @@ namespace models {
         image?: string | null | undefined;
         role: UserRole;
         accounts?: AccountProps[];
-        cart: CartProps | null;
+        cart?: CartProps | null;
         orders?: OrderProps[];
     }
 
-    interface Order {
+    interface OrderItemProps {
         id: string;
-        items: CartItemProps[];
-        user: UserProps;
+        product: ProdutoProps;
+        productId: string;
+        quantity: number;
+        orderId: string;
+    }
+
+    interface OrderProps {
+        id: string;
+        OrderItem: OrderItemProps[];
+        user?: UserProps;
         userId: string;
         createdAt: Date;
         updatedAt: Date;
-        status: String;
+        status: string;
         total: number;
     }
 
