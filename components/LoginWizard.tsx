@@ -4,6 +4,7 @@ import { CgProfile } from "react-icons/cg";
 import Link from "next/link";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import UserWizard from "./UserWizard";
+import Image from "next/image";
 
 const LoginWizard = () => {
     const [wizardOpen, setWizardOpen] = useState(false);
@@ -17,7 +18,9 @@ const LoginWizard = () => {
         <div>
             {user ? (
                 <div className="relative cursor-pointer" onClick={onClick}>
-                    <img
+                    <Image
+                        height={100}
+                        width={100}
                         src={
                             user.image ||
                             "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"

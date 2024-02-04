@@ -14,7 +14,7 @@ const Colecoes = () => {
                     backgroundImage: `linear-gradient(rgba(228, 168, 77, 0.5), rgba(228, 168, 77, 0.5)),  url(${spring.src})`,
                 }}
             >
-                Spring's Here
+                Springs Here
             </Link>
             <Link
                 href="/produtos?collection=winter feels"

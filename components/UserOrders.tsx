@@ -14,7 +14,7 @@ const UserOrders = ({ userId }: UserOrdersProps) => {
             setOrders(result);
         }
         fetchOrders();
-    }, []);
+    }, [userId]);
 
     return (
         <div className="py-2 space-y-3">

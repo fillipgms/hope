@@ -20,7 +20,7 @@ export default function ProductPage({ params: { id } }: ProductPageProps) {
             setProduct(fetchedProduct);
         }
         fetchProduct();
-    }, []);
+    }, [id]);
 
     if (!product) {
         return (
