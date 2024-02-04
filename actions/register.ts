@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import bcrypt from "bcryptjs";
 import * as z from "zod";
 
+import { AuthError } from "next-auth";
 import { RegisterSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
 
@@ -33,11 +34,24 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         },
     });
 
-    await signIn("credentials", {
-        email,
-        hashedPassword,
-        redirectTo: DEFAULT_LOGIN_REDIRECT,
-    });
+    try {
+        await signIn("credentials", {
+            email,
+            hashedPassword,
+            redirectTo: DEFAULT_LOGIN_REDIRECT,
+        });
+    } catch (error) {
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case "CredentialsSignin":
+                    return { error: "Credeciais inválidas!" };
+                default:
+                    return { error: "Algo deu errado!" };
+            }
+        }
+
+        throw error;
+    }
 
     return { success: "Usuário criado!" };
 };
