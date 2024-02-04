@@ -29,18 +29,19 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
         return { error: "Esse usuário utiliza outro provedor" };
     }
 
-    if (!existingUser.emailVerified) {
-        const verificationToken = await generateVerificationToken(
-            existingUser.email
-        );
+    // if (!existingUser.emailVerified) {
+    //     const verificationToken = await generateVerificationToken(
+    //         existingUser.email
+    //     );
 
-        await sendVerificationEmail(
-            verificationToken.email,
-            verificationToken.token
-        );
+    //     await sendVerificationEmail(
+    //         verificationToken.email,
+    //         verificationToken.token
+    //     );
 
-        return { success: "Verifique o seu email para confirmação!" };
-    }
+    //     return { success: "Verifique o seu email para confirmação!" };
+    // }
+
     try {
         await signIn("credentials", {
             email,

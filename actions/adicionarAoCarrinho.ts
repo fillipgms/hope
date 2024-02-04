@@ -71,7 +71,6 @@ export const adicionarAoCarrinho = async (
             };
         }
     } catch (error) {
-        console.error("Erro ao adicionar ao carrinho:", error);
         return { error: "Erro ao adicionar ao carrinho." };
     }
 };

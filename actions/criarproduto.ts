@@ -16,8 +16,6 @@ export const criarProduto = async (values: z.infer<typeof ProdutoSchema>) => {
     const { name, description, price, category, collection, pictures } =
         validatedFields.data;
 
-    console.log(price);
-
     const existingProduct = await getProductByName(name);
 
     if (existingProduct) return { error: "Esse produto já existee!" };

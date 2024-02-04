@@ -6,9 +6,9 @@ import * as z from "zod";
 
 import { RegisterSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
-import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/mail";
-import { login } from "./login";
+
+import { signIn } from "@/auth";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
     const validatedFields = RegisterSchema.safeParse(values);
@@ -33,5 +33,11 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         },
     });
 
-    return { success: "Verifique o seu email para confirmação!" };
+    await signIn("credentials", {
+        email,
+        password,
+        redirectTo: DEFAULT_LOGIN_REDIRECT,
+    });
+
+    return { success: "Usuário criado!" };
 };

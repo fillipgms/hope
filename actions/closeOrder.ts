@@ -39,8 +39,6 @@ export const closeOrder = async (userId: string) => {
             data: { items: { deleteMany: {} } },
         });
 
-        console.log("foi");
-
         return order;
     } catch (error) {
         return { error: "Erro ao fechar o pedido" };
