@@ -35,7 +35,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
     await signIn("credentials", {
         email,
-        password,
+        hashedPassword,
         redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
 
