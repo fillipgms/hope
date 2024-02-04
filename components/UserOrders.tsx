@@ -2,7 +2,7 @@ import { getOrdersByUserId } from "@/data/orders";
 import React, { useEffect, useState } from "react";
 
 interface UserOrdersProps {
-    userId: string;
+    userId: string | undefined;
 }
 
 const UserOrders = ({ userId }: UserOrdersProps) => {
@@ -10,7 +10,7 @@ const UserOrders = ({ userId }: UserOrdersProps) => {
 
     useEffect(() => {
         async function fetchOrders() {
-            const result = await getOrdersByUserId(userId);
+            const result = await getOrdersByUserId(userId || "");
             setOrders(result);
         }
         fetchOrders();
