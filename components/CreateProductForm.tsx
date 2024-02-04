@@ -237,7 +237,7 @@ const CreateProdutoForm = () => {
                                     </FormControl>
                                     <SelectContent>
                                         <SelectItem value="spring's here">
-                                            spring's here
+                                            spring&apos;s here
                                         </SelectItem>
                                         <SelectItem value="winter feels">
                                             winter feels
@@ -269,7 +269,7 @@ const CreateProdutoForm = () => {
                             }
                         }}
                     >
-                        Criar produto&apos;
+                        Criar produto
                     </Button>
                 </div>
             </form>
