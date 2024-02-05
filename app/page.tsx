@@ -1,6 +1,7 @@
+import Footer from "@/components/Footer";
 import Colecoes from "@/components/sections/Colecoes";
+import Feedback from "@/components/sections/Feedback";
 import Products from "@/components/sections/Products";
-import { IoIosAlert } from "react-icons/io";
 
 export default function Home() {
     return (
@@ -8,6 +9,8 @@ export default function Home() {
             <section className="w-full flex items-center justify-center  min-h-[70vh] relative bg-[url('../public/images/header.jpg')] bg-cover bg-center"></section>
             <Products />
             <Colecoes />
+            <Feedback />
+            <Footer />
         </main>
     );
 }
