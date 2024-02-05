@@ -82,7 +82,7 @@ const CartItens = () => {
     );
 
     return (
-        <div className="col-span-3 space-y-5">
+        <div className="col-span-3 space-y-5 px-4">
             {cartItems.length === 0 ? (
                 <p>Sem itens no carrinho</p>
             ) : (

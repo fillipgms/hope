@@ -47,7 +47,7 @@ const CartItensWizard = () => {
     };
 
     return (
-        <div className="h-fit sticky top-24 bg-slate-50">
+        <div className="h-fit  sticky top-[5.5rem] py-4 px-4 shadow-md md:shadow-none bg-slate-50">
             <div className="space-y-4">
                 <h3 className="text-center">
                     Subtotal ( {cartItems.length}{" "}

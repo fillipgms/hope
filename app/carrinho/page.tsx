@@ -3,7 +3,7 @@ import CartItensWizard from "@/components/CartItensWizard";
 
 export default function carrinhoPage() {
     return (
-        <main className="max-w-6xl mx-auto mt-10 px-4">
+        <main className="max-w-6xl mx-auto mt-10 ">
             <div className="py-8 space-y-4">
                 <h1 className="text-3xl font-semibold">Seu Carrinho</h1>
             </div>
