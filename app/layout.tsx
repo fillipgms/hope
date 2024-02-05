@@ -27,12 +27,10 @@ export default async function RootLayout({
                 <StoreProvider>
                     <html lang="pt-br">
                         <body
-                            className={`${inter.className} min-h-dvh relative`}
+                            className={`${inter.className} min-h-dvh relative bg-slate-50`}
                         >
                             <Header />
-                            <div className="h-dvh pt-[85px] bg-slate-50">
-                                {children}
-                            </div>
+                            <div className="h-dvh pt-[85px] ">{children}</div>
                         </body>
                     </html>
                 </StoreProvider>
