@@ -87,7 +87,7 @@ const AdicionarAoCarrinhoButton = ({
         <Button
             disabled={isPending || !!error}
             onClick={addToCartHandler}
-            className="w-full px-2 min-h-9 h-min whitespace-normal bg-hope-primary text-hope-dark md:hover:bg-hope-primary/70"
+            className="w-full px-2 min-h-9 h-min whitespace-normal bg-hope-primary text-hope-dark hover:bg-hope-primary"
         >
             {error || "Adicionar ao carrinho"}
         </Button>
