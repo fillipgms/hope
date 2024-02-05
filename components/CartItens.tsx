@@ -91,7 +91,7 @@ const CartItens = () => {
                         key={item.id}
                         className="flex rounded-md overflow-hidden w-full shadow-md"
                     >
-                        <div className="w-36">
+                        <div className=" max-w-28">
                             <Image
                                 src={item.product.pictures[0].url}
                                 alt={item.product.name}

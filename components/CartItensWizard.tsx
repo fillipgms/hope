@@ -14,6 +14,8 @@ const CartItensWizard = () => {
     const { push } = useRouter();
     const [total, setTotal] = useState<number>();
     const [isPending, startTransition] = useTransition();
+    const [scrolled, setScrolled] = useState(false);
+
     const cartItems = useSelector(
         (state: { cart: { cartItems: models.CartItemProps[] } }) =>
             state.cart.cartItems
@@ -35,6 +37,16 @@ const CartItensWizard = () => {
         setTotal(parseFloat(roundedSubtotal));
     }, [cartItems]);
 
+    useEffect(() => {
+        window.onscroll = function () {
+            if (window.scrollY > 130) {
+                setScrolled(true);
+            } else {
+                setScrolled(false);
+            }
+        };
+    }, [window.scrollY]);
+
     const closeActiveOrder = () => {
         if (user) {
             startTransition(async () => {
@@ -47,7 +59,14 @@ const CartItensWizard = () => {
     };
 
     return (
-        <div className="h-fit  sticky top-[5.5rem] py-4 px-4 shadow-md md:shadow-none bg-slate-50">
+        <div
+            className="h-fit  sticky top-[5.5rem] py-4 px-4 md:!shadow-none bg-slate-50"
+            style={{
+                boxShadow: scrolled
+                    ? "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
+                    : "",
+            }}
+        >
             <div className="space-y-4">
                 <h3 className="text-center">
                     Subtotal ( {cartItems.length}{" "}
