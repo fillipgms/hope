@@ -98,7 +98,7 @@ const CartItens = () => {
                                 width={500}
                                 height={500}
                                 loading="lazy"
-                                className="w-full aspect-square object-cover "
+                                className="h-full aspect-square object-cover "
                             />
                         </div>
                         <div className="w-full">
