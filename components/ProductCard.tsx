@@ -23,8 +23,7 @@ const ProductCard = ({ id, name, pictures, price }: models.ProdutoProps) => {
                         height={90}
                         className="object-cover w-full aspect-video rounded-md"
                     />
-                    <div className="flex flex-wrap items-center justify-between  py-1">
-                        <span>TODO: estrelas</span>
+                    <div className="flex flex-wrap items-center justify-center">
                         <h4 className="text-lg ">R$ {price}</h4>
                     </div>
                 </CardContent>

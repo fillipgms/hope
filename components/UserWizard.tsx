@@ -18,7 +18,7 @@ const UserWizard = () => {
         <div className="z-[5] absolute top-full text-base left-1/2 -translate-x-1/2 bg-neutral-200 py-2 px-4 rounded-md shadow-sm">
             <span></span>
             <div className="space-y-2">
-                <Link href="/setings" className="flex items-center gap-1">
+                <Link href="/settings" className="flex items-center gap-1">
                     <IoIosSettings />
                     Configurações
                 </Link>

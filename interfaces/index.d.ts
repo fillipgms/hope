@@ -8,7 +8,7 @@ namespace models {
         id: string;
         name: string;
         description: string;
-        price: int;
+        price: string;
         categoryId: string;
         collectionId: string;
         pictures: FotoProps[];
@@ -79,7 +79,7 @@ namespace models {
         createdAt: Date;
         updatedAt: Date;
         status: string;
-        total: number;
+        total: string;
     }
 
     interface AccountProps {

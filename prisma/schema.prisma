@@ -3,9 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
+  provider  = "mongodb"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 enum UserRole {
@@ -14,7 +13,7 @@ enum UserRole {
 }
 
 model User {
-  id            String       @id @default(cuid())
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
   email         String?      @unique
   emailVerified DateTime?
@@ -27,8 +26,8 @@ model User {
 }
 
 model Account {
-  id                 String   @id @default(cuid())
-  userId             String
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String  @db.ObjectId
   type               String
   provider           String
   providerAccountId  String
@@ -45,23 +44,23 @@ model Account {
 }
 
 model Cart {
-  id        String @id @default(cuid())
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
   items     CartItem[]
   user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String @unique
+  userId    String @unique  @db.ObjectId
 }
 
 model CartItem {
-  id        String @id @default(cuid())
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
   product   Product @relation(fields: [productId], references: [id])
   quantity  Int
   cart      Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  productId String
-  cartId    String
+  productId String  @db.ObjectId
+  cartId    String  @db.ObjectId
 }
 
 model VerificationToken {
-  id      String  @id @default(cuid())
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
   email   String
   token   String  @unique
   expires DateTime
@@ -70,7 +69,7 @@ model VerificationToken {
 }
 
 model PasswordResetToken {
-  id      String  @id @default(cuid())
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
   email   String
   token   String  @unique
   expires DateTime
@@ -78,55 +77,55 @@ model PasswordResetToken {
   @@unique([email, token])
 }
 
-model Product {
-  id              String @unique @id @default(cuid())
+model Product { 
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
   name            String
-  description       String
-  price           Decimal    // Alterado para usar um tipo numérico para preços
+  description     String
+  price           String
   category        Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId      String
+  categoryId      String  @db.ObjectId
   collection      Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
-  collectionId    String
+  collectionId    String  @db.ObjectId
   pictures        ProductPicture[]
   cartItem        CartItem[] 
   orderItem       OrderItem[]
 }
 
 model ProductPicture {
-  id        String  @unique @id @default(cuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   url       String
   product   Product @relation(fields: [idProduct], references: [id], onDelete: Cascade)
-  idProduct String
+  idProduct String  @db.ObjectId
 }
 
 model Collection {
-  id            String  @id @default(cuid())
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
   collectionName   String @unique
   products      Product[]
 }
 
 model Category {
-  id              String  @id @default(cuid())
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
   categoryName   String @unique
   products        Product[]
 }
 
 model Order {
-  id          String   @id @default(cuid())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   OrderItem   OrderItem[]
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String
+  userId      String  @db.ObjectId
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   status      String
-  total       Float
+  total       String
 }
 
 model OrderItem {
-  id          String   @id @default(cuid())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   product     Product  @relation(fields: [productId], references: [id])
-  productId   String
+  productId   String  @db.ObjectId
   quantity    Int
   order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  orderId     String
+  orderId     String  @db.ObjectId
 }

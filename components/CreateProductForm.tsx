@@ -61,7 +61,7 @@ const CreateProdutoForm = () => {
         defaultValues: {
             name: "",
             description: "",
-            price: 0,
+            price: "",
             category: "",
             collection: "",
             pictures: [],

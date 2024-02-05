@@ -113,7 +113,11 @@ const CartItens = () => {
                                 </div>
                                 <p>
                                     total: R${" "}
-                                    {(item.product.price * (item.quantity || 1))
+                                    {(
+                                        parseFloat(
+                                            item.product.price.replace(",", ".")
+                                        ) * (item.quantity || 1)
+                                    )
                                         .toFixed(2)
                                         .replace(".", ",")}
                                 </p>

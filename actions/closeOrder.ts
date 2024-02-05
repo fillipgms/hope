@@ -3,6 +3,14 @@
 import { getCartByUserId } from "@/data/carrinho";
 import { db } from "@/lib/db";
 
+const formatCurrency = (value: number) => {
+    const formattedValue = value.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+    });
+    return formattedValue;
+};
+
 export const closeOrder = async (userId: string) => {
     try {
         const cart = await getCartByUserId(userId);
@@ -11,8 +19,12 @@ export const closeOrder = async (userId: string) => {
 
         let total = 0;
         cart.items.forEach((item) => {
-            total += Number(item.product.price) * item.quantity;
+            total +=
+                parseFloat(item.product.price.replace(",", ".")) *
+                item.quantity;
         });
+
+        const formattedTotal = formatCurrency(total);
 
         const order = await db.order.create({
             data: {
@@ -20,7 +32,7 @@ export const closeOrder = async (userId: string) => {
                     connect: { id: userId },
                 },
                 status: "finalizado",
-                total: total,
+                total: formattedTotal,
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 OrderItem: {

@@ -19,7 +19,7 @@ type TextInputProps = {
     key: number;
 };
 
-const moneyFormatter = Intl.NumberFormat("en-US", {
+const moneyFormatter = Intl.NumberFormat("pt-br", {
     currency: "BRL",
     currencyDisplay: "symbol",
     currencySign: "standard",
@@ -41,7 +41,15 @@ export default function MoneyInput(props: TextInputProps) {
     function handleChange(realChangeFn: Function, formattedValue: string) {
         const digits = formattedValue.replace(/\D/g, "");
         const realValue = Number(digits) / 100;
-        realChangeFn(realValue);
+        const stringValue = JSON.stringify(realValue);
+
+        const formattedString = stringValue.replace(".", ",");
+        const parts = formattedString.split(",");
+        const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        const finalString =
+            parts.length === 2 ? integerPart + "," + parts[1] : integerPart;
+
+        realChangeFn(finalString);
     }
 
     return (

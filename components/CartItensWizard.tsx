@@ -25,7 +25,9 @@ const CartItensWizard = () => {
             if (!item.quantity) {
                 item.quantity = 1;
             }
-            subtotal += item.product.price * item.quantity;
+            subtotal +=
+                parseFloat(item.product.price.replace(",", ".")) *
+                item.quantity;
         });
 
         const roundedSubtotal = subtotal.toFixed(2);
