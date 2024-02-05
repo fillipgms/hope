@@ -12,6 +12,7 @@ export default function Home() {
             <section className="w-full relative flex items-center justify-center min-h-[70vh]  bg-cover bg-center">
                 <Image
                     {...header}
+                    loading="eager"
                     alt="header image"
                     className="w-full h-full absolute top-0 left-0 object-cover"
                 />
