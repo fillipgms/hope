@@ -81,7 +81,7 @@ const UserOrders = ({ userId }: UserOrdersProps) => {
                                             className="h-full aspect-square object-cover "
                                         />
                                     </div>
-                                    <div className="text-left pl-3 w-full space-y-2 flex justify-between items-center">
+                                    <div className="text-left gap-10 pl-3 w-full space-y-2 flex justify-between items-center">
                                         <span>
                                             <h5>{item.product.name}</h5>
                                         </span>
