@@ -4,6 +4,7 @@ import LoginWizard from "./LoginWizard";
 import { FaShoppingBasket } from "react-icons/fa";
 import NavCategorias from "./NavCategorias";
 import CartLenght from "./CartLenght";
+import SearchBar from "./SearchBar";
 
 const Header = () => {
     return (
@@ -12,6 +13,8 @@ const Header = () => {
                 <Link className="uppercase text-xl font-bold" href="/">
                     HOPE
                 </Link>
+
+                <SearchBar />
 
                 <div className="flex items-center gap-5 text-3xl">
                     <LoginWizard />
