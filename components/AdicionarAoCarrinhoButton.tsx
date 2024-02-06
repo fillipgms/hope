@@ -14,11 +14,13 @@ import { editItemInCart } from "@/actions/editItemInCart";
 interface AdicionarAoCarrinhoButtonProps {
     productId: string;
     quantity?: number;
+    text?: string;
 }
 
 const AdicionarAoCarrinhoButton = ({
     productId,
     quantity = 1,
+    text,
 }: AdicionarAoCarrinhoButtonProps) => {
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | null>(null);
@@ -89,7 +91,7 @@ const AdicionarAoCarrinhoButton = ({
             onClick={addToCartHandler}
             className="w-full px-2 min-h-9 h-min whitespace-normal bg-hope-primary text-hope-dark hover:bg-hope-primary"
         >
-            {error || "Adicionar ao carrinho"}
+            {error || text || "Adicionar ao carrinho"}
         </Button>
     );
 };

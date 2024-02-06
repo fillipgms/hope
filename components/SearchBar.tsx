@@ -36,23 +36,28 @@ const SearchBar = () => {
     return (
         <div className="md:w-[70%] sm:w-[300px] w-full relative hidden md:block">
             <input
-                className="border-gray-200 border py-2 px-4 rounded-lg w-full"
+                className="border-gray-200 border py-2 px-4 rounded-lg w-full focus:outline-none"
                 type="text"
                 placeholder="pesquise um produto..."
                 onChange={(e) => filter(e.target.value)}
             />
             <FiSearch className="absolute right-0 mr-3 text-gray-400 top-1/2 -translate-y-1/2 text-xl" />
-            <div className="absolute top-full py-2 px-4 bg-neutral-200 rounded-b-md w-full shadow-2xl">
-                {filteredProducts.map((item) => (
-                    <Link
-                        key={item.id}
-                        href={`/produtos/${item.id}`}
-                        className="cursor-pointer w-full py-1"
-                    >
-                        <p>{item.name}</p>
-                    </Link>
-                ))}
-            </div>
+            {filteredProducts.length > 0 && (
+                <div className="border-gray-200 flex flex-col gap-2 border absolute top-full py-2 px-4 bg-white rounded-b-md w-full shadow-2xl">
+                    {filteredProducts.map((item) => (
+                        <Link
+                            key={item.id}
+                            onClick={() => {
+                                setFilterestProducts([]);
+                            }}
+                            href={`/produtos/${item.id}`}
+                            className="cursor-pointer w-full"
+                        >
+                            <p>{item.name}</p>
+                        </Link>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

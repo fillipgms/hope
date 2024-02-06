@@ -11,7 +11,7 @@ const Feedback = () => {
             <div className="grid lg:grid-cols-[300px,1fr] gap-4">
                 <div className="border border-gray-300 rounded-2xl flex justify-center items-center p-6 lg:p-0 flex-col">
                     <Image
-                        {...profile}
+                        src={profile}
                         alt="profile picture"
                         className="rounded-full w-1/3"
                     />
@@ -24,7 +24,7 @@ const Feedback = () => {
                 </div>
                 <div className="bg-cover overflow-hidden relative h-[500px] rounded-2xl flex justify-center items-center bg-center">
                     <Image
-                        {...banner}
+                        src={banner}
                         width={3930}
                         height={3628}
                         alt="banner bg"

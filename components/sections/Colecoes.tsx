@@ -14,7 +14,7 @@ const Colecoes = () => {
                 className="row-span-2 overflow-hidden relative flex items-center justify-center text-3xl text-white font-bold cursor-pointer rounded-md capitalize"
             >
                 <Image
-                    {...spring}
+                    src={spring}
                     alt="Springs Here Collection"
                     className="absolute z-[-1] h-full object-cover"
                 />
@@ -25,7 +25,7 @@ const Colecoes = () => {
                 className="flex overflow-hidden items-center relative justify-center text-3xl text-white font-bold cursor-pointer rounded-md capitalize"
             >
                 <Image
-                    {...winter}
+                    src={winter}
                     alt="Springs Here Collection"
                     className="absolute z-[-1] h-full object-cover"
                 />
@@ -37,7 +37,7 @@ const Colecoes = () => {
                 className="flex overflow-hidden items-center relative justify-center text-3xl text-white font-bold cursor-pointer rounded-md capitalize"
             >
                 <Image
-                    {...autumn}
+                    src={autumn}
                     alt="Springs Here Collection"
                     className="absolute z-[-1] h-full w-full object-cover"
                 />

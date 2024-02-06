@@ -7,7 +7,7 @@ const HeroSection = () => {
     return (
         <section className="w-full relative flex items-center justify-center min-h-[70vh]  bg-cover bg-center">
             <Image
-                {...header}
+                src={header}
                 loading="eager"
                 priority
                 alt="header image"
