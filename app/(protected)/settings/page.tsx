@@ -1,8 +1,9 @@
 "use client";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import Image from "next/image";
+import MoonLoader from "react-spinners/MoonLoader";
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
     const user = useCurrentUser();
 
     if (!user) throw Error("usuário não encontrado");
