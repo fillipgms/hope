@@ -15,8 +15,8 @@ export default async function ProductPage({
 
     if (!product) {
         return (
-            <section className="h-full flex items-start justify-center">
-                produto nao encontrado
+            <section className="h-full flex items-center justify-center">
+                <p>produto nao encontrado</p>
             </section>
         );
     }
